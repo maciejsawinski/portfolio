@@ -1,13 +1,16 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import Blocks from "../components/Blocks.svelte";
 ---
 
 <Layout>
-	<main>
-		content
-	</main>
+  <main class="h-full w-full">
+    <Blocks client:only="svelte" />
+    <div>introduction</div>
+    <div>previous work</div>
+    <div>contact</div>
+    <div>animation finisher</div>
+  </main>
 </Layout>
 
-<style>
-	
-</style>
+<style></style>
