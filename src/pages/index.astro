@@ -1,16 +1,84 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Blocks from "../components/Blocks.svelte";
+import Project from "../components/Project.astro";
 ---
 
 <Layout>
-  <main class="h-full w-full">
+  <main class="max-w-2xl flex flex-col mx-auto px-5">
     <Blocks client:only="svelte" />
-    <div>introduction</div>
-    <div>previous work</div>
-    <div>contact</div>
-    <div>animation finisher</div>
+    <h2 class="mb-2.5 font-bold text-lg">Hello, I'm Maciej Sawiński.</h2>
+    <p class="mb-10">
+      I'm a software developer specializing in full-stack web development, with
+      an interest in AI and blockchain, as well as topics like urbanism,
+      transportation and gaming.
+    </p>
+    <h2 class="mb-2.5 font-bold text-lg">Recent projects</h2>
+    <div class="mb-10">
+      <Project
+        name="owlchain analytics"
+        description="Svelte frontend app and backend infrastructure for data fetching"
+        url={["https://www.owlchain.xyz/"]}
+        github_url={["https://github.com/maciejsawinski/owlchain-front"]}
+        img_src="owlchain.png"
+      />
+      <Project
+        name="bybarbro"
+        description="Vue.js app with a hosted Strapi CMS service"
+        url={["https://bybarbro.no/"]}
+        github_url={[]}
+        img_src="bybarbro.png"
+      />
+      <Project
+        name="tik"
+        description="A small next.js frontend app deployed on a raspberrypi with a backend service"
+        url={[]}
+        github_url={[
+          "https://github.com/maciejsawinski/tik-frontend",
+          "https://github.com/maciejsawinski/tik-backend-space",
+        ]}
+        img_src="tik.png"
+      />
+    </div>
+    <h2 class="mb-2.5 font-bold text-lg">Experience</h2>
+    <p class="mb-10">
+      I have worked as a PHP developer for almost two years. Worked mostly on
+      ecommerce projects with Wordpress, PrestaShop and Magento. Currently, I am
+      dedicated to freelancing and developing full-stack JavaScript/TypeScript
+      apps using a wide range of technologies. During my free time, I am <span
+        class="italic">trying</span
+      > to learn about AI, machine learning.
+    </p>
+    <h2 class="mb-2.5 font-bold text-lg">Contact</h2>
+    <div class="mb-10 grayscale hover:grayscale-0">
+      <a href="https://github.com/maciejsawinski/" target="_blank">
+        <button
+          class="py-0.25 px-1 mr-2.5 bg-purple-900 text-white hover:underline"
+        >
+          github
+        </button>
+      </a>
+      <a
+        href="https://www.linkedin.com/in/maciej-sawi%C5%84ski-90a9aa119/"
+        target="_blank"
+      >
+        <button
+          class="py-0.25 px-1 mr-2.5 bg-purple-900 text-white hover:underline"
+        >
+          linkedin
+        </button>
+      </a>
+      <a
+        href="mailto:macsawinski@gmail.com?subject=Hey%20Maciej"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <button
+          class="py-0.25 px-1 mr-2.5 bg-purple-900 text-white hover:underline"
+        >
+          email
+        </button>
+      </a>
+    </div>
   </main>
 </Layout>
-
-<style></style>

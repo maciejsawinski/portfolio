@@ -5,27 +5,42 @@
   import sleep from "../utils/sleep";
   import random from "../utils/random";
 
-  const cubeGen = (
-    sceneInstance: THREE.Scene,
-    geometry: THREE.BoxGeometry,
-    material: THREE.MeshBasicMaterial,
-    position: [x: number, y: number, z: number]
-  ) => {
-    const cube = new THREE.Mesh(geometry, material);
-    cube.position.set(...position);
-    sceneInstance.add(cube);
+  const generatePositions = async (count: number) => {
+    const positions = [[0, 0, 0]];
+
+    while (positions.length <= count) {
+      const index = Math.floor(Math.random() * 3);
+      const value = Math.random() < 0.5 ? -1 : 1;
+      const positionsCopy = structuredClone(positions);
+      const random =
+        positionsCopy[Math.floor(Math.random() * positionsCopy.length)];
+
+      random[index] += value;
+
+      if (!positions.some((arr) => arr.every((num, i) => num === random[i]))) {
+        positions.push(random);
+      }
+    }
+
+    return positions;
+  };
+
+  const randomGrayRgb = () => {
+    const n = random(0, 255);
+    return `rgb(${n}, ${n}, ${n})`;
   };
 
   onMount(async () => {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    const canvasDomEl: Element | null = document.querySelector("#blocks");
+    scene.background = new THREE.Color("#f5f5f5");
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 1000);
+    const canvasDomEl: Element | null = document.querySelector("#top_blocks");
 
     if (canvasDomEl) {
       const renderer = new THREE.WebGLRenderer({
         canvas: canvasDomEl,
       });
-      renderer.setSize(500, 500);
+      renderer.setSize(250, 250);
 
       camera.position.set(25, 25, 25);
       camera.lookAt(scene.position);
@@ -34,50 +49,48 @@
       scene.add(cubes);
 
       const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ color: "white" });
+      const material = new THREE.MeshBasicMaterial({ color: "#f5f5f5" });
+      const outlineMaterial = new THREE.LineBasicMaterial({
+        color: "#000000",
+      });
+      const edges = new THREE.EdgesGeometry(geometry);
 
       const firstCube = new THREE.Mesh(geometry, material);
+      const firstOutline = new THREE.LineSegments(edges, outlineMaterial);
+
       firstCube.position.set(0, 0, 0);
+      firstOutline.position.set(0, 0, 0);
+      firstOutline.renderOrder = 1;
       cubes.add(firstCube);
+      scene.add(firstOutline);
 
       renderer.render(scene, camera);
 
-      for (let i = 0; i < 100; i++) {
-        await sleep(100);
+      const positions = await generatePositions(250);
 
-        const cube = new THREE.Mesh(geometry, material);
-        cube.position.set(random(-20, 20), random(-20, 20), random(-20, 20));
-
-        let closestCube: THREE.Object3D | any = null;
-        let closestDistance = Infinity;
-        cubes.children.forEach((existingCube) => {
-          const distance = existingCube.position.distanceTo(cube.position);
-          if (distance < closestDistance) {
-            closestCube = existingCube;
-            closestDistance = distance;
-          }
+      for (const [i, position] of positions.entries()) {
+        const color =
+          i % 10 === 0 ? THREE.MathUtils.randInt(0, 0xffffff) : randomGrayRgb();
+        const material = new THREE.MeshBasicMaterial({
+          color,
         });
+        const cube = new THREE.Mesh(geometry, material);
+        const outline = new THREE.LineSegments(edges, outlineMaterial);
 
-        if (closestCube instanceof THREE.Object3D) {
-          const newPosition = closestCube.position
-            .clone()
-            .add(cube.position.clone().sub(closestCube.position));
-          cube.position.copy(newPosition);
+        cube.position.set(...(position as [number, number, number]));
+        outline.position.set(...(position as [number, number, number]));
+        outline.renderOrder = 1;
 
-          cubes.add(cube);
-        }
+        cubes.add(cube);
+        scene.add(outline);
 
         renderer.render(scene, camera);
+
+        await sleep(25);
       }
-
-      // const animate = () => {
-      //   requestAnimationFrame(animate);
-
-      //   renderer.render(scene, camera);
-      // };
-      // animate();
     }
   });
 </script>
 
-<canvas id="blocks" />
+<div class="h-[250px] w-[250px]">skeleton</div>
+<div class="place-self-center"><canvas id="top_blocks" /></div>
