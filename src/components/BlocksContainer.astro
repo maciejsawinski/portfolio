@@ -1,0 +1,30 @@
+---
+import Blocks from "./Blocks.svelte";
+---
+
+<div class="blocks_skeleton h-[250px] w-[250px]"></div>
+<div class="blocks_content place-self-center">
+    <Blocks client:only="svelte" />
+</div>
+
+<style>
+    .blocks_skeleton {
+        display: block;
+    }
+    .blocks_content {
+        display: none;
+    }
+</style>
+
+<script>
+    import { sleep } from "../libs/utils";
+
+    await sleep(250);
+
+    const blocksContent =
+        document.querySelector<HTMLElement>(".blocks_content");
+    const blocksSkeleton =
+        document.querySelector<HTMLElement>(".blocks_skeleton");
+    blocksContent!.style.display = "block";
+    blocksSkeleton!.style.display = "none";
+</script>

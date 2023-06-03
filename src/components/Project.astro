@@ -1,4 +1,6 @@
 ---
+import Button from "./Button.astro";
+
 const { name, description, url, github_url, img_src } = Astro.props;
 ---
 
@@ -6,18 +8,16 @@ const { name, description, url, github_url, img_src } = Astro.props;
   class="flex flex-col md:flex-row justify-between mb-5 grayscale hover:grayscale-0"
 >
   <div class="flex flex-col justify-between">
-    <div>
+    <div class="mb-2.5 md:mb-auto">
       <h3 class="font-bold">{name}</h3>
       <p>{description}</p>
     </div>
-    <p>
+    <div>
       {
         url.length !== 0 &&
           url.map((url: string) => (
             <a href={url} target="_blank">
-              <button class="py-0.25 px-1 mr-2.5 bg-purple-900 text-white hover:underline">
-                website
-              </button>
+              <Button name="website" />
             </a>
           ))
       }
@@ -25,13 +25,11 @@ const { name, description, url, github_url, img_src } = Astro.props;
         github_url.length !== 0 &&
           github_url.map((url: string) => (
             <a href={url} target="_blank">
-              <button class="py-0.25 px-1 mr-2.5 bg-purple-900 text-white hover:underline">
-                code
-              </button>
+              <Button name="code" />
             </a>
           ))
       }
-    </p>
+    </div>
   </div>
   <div class="flex justify-center mt-2.5 md:mt-auto min-w-[13rem]">
     <img class="w-52 rounded-lg" src={`projects/${img_src}`} alt="website" />

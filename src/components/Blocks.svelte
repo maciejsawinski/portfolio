@@ -2,8 +2,7 @@
   import { onMount } from "svelte";
   import * as THREE from "three";
 
-  import sleep from "../utils/sleep";
-  import random from "../utils/random";
+  import { sleep, random } from "../libs/utils";
 
   const generatePositions = async (count: number) => {
     const positions = [[0, 0, 0]];
@@ -92,5 +91,4 @@
   });
 </script>
 
-<div class="h-[250px] w-[250px]">skeleton</div>
-<div class="place-self-center"><canvas id="top_blocks" /></div>
+<canvas id="top_blocks" />
