@@ -36,10 +36,14 @@
     const canvasDomEl: Element | null = document.querySelector("#top_blocks");
 
     if (canvasDomEl) {
+      const positions = await generatePositions(250);
+
       const renderer = new THREE.WebGLRenderer({
+        antialias: true,
         canvas: canvasDomEl,
       });
       renderer.setSize(250, 250);
+      renderer.setPixelRatio(window.devicePixelRatio);
 
       camera.position.set(25, 25, 25);
       camera.lookAt(scene.position);
@@ -48,7 +52,7 @@
       scene.add(cubes);
 
       const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ color: "#f5f5f5" });
+      const material = new THREE.MeshMatcapMaterial({ color: "#f5f5f5" });
       const outlineMaterial = new THREE.LineBasicMaterial({
         color: "#000000",
       });
@@ -64,8 +68,6 @@
       scene.add(firstOutline);
 
       renderer.render(scene, camera);
-
-      const positions = await generatePositions(250);
 
       for (const [i, position] of positions.entries()) {
         const color =
