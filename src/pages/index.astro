@@ -32,14 +32,14 @@ import Button from "../components/Button.astro";
       />
       <Project
         name="bybarbro"
-        description="Vue.js app with a hosted Strapi CMS service"
+        description="Vue.js/nuxt app with a hosted Strapi CMS service"
         url={["https://bybarbro.no/"]}
         github_url={[]}
         img_src="bybarbro.png"
       />
       <Project
         name="tik"
-        description="A small next.js frontend app deployed on a raspberrypi with a backend service"
+        description="React/next.js frontend app deployed on a raspberrypi with a backend service"
         url={[]}
         github_url={[
           "https://github.com/maciejsawinski/tik-frontend",
@@ -60,20 +60,20 @@ import Button from "../components/Button.astro";
     <h2 class="mb-2.5 font-bold text-lg">Contact</h2>
     <div class="mb-10 grayscale hover:grayscale-0">
       <a href="https://github.com/maciejsawinski/" target="_blank">
-        <Button name="github" />
+        <Button name="github" icon="github" />
       </a>
       <a
         href="https://www.linkedin.com/in/maciej-sawi%C5%84ski-90a9aa119/"
         target="_blank"
       >
-        <Button name="linkedin" />
+        <Button name="linkedin" icon="linkedin" />
       </a>
       <a
         href="mailto:macsawinski@gmail.com?subject=Hey%20Maciej"
         rel="noopener noreferrer"
         target="_blank"
       >
-        <Button name="email" />
+        <Button name="email" icon="email" />
       </a>
     </div>
   </main>

@@ -17,7 +17,7 @@ const { name, description, url, github_url, img_src } = Astro.props;
         url.length !== 0 &&
           url.map((url: string) => (
             <a href={url} target="_blank">
-              <Button name="website" />
+              <Button name="website" icon="external" />
             </a>
           ))
       }
@@ -25,7 +25,7 @@ const { name, description, url, github_url, img_src } = Astro.props;
         github_url.length !== 0 &&
           github_url.map((url: string) => (
             <a href={url} target="_blank">
-              <Button name="code" />
+              <Button name="code" icon="github" />
             </a>
           ))
       }
