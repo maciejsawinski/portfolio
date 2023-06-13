@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import * as THREE from "three";
 
-  import { sleep, random } from "../libs/utils";
+  import { sleep } from "../libs/utils";
 
   const generatePositions = async (count: number) => {
     const positions = [[0, 0, 0]];
@@ -24,26 +24,21 @@
     return positions;
   };
 
-  const randomGrayRgb = () => {
-    const n = random(0, 255);
-    return `rgb(${n}, ${n}, ${n})`;
-  };
-
   onMount(async () => {
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#f5f5f5");
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 1000);
+    scene.background = new THREE.Color("#ffffff");
+    const camera = new THREE.PerspectiveCamera(35);
     const canvasDomEl: Element | null = document.querySelector("#top_blocks");
 
     if (canvasDomEl) {
-      const positions = await generatePositions(250);
+      const positions = await generatePositions(500);
 
       const renderer = new THREE.WebGLRenderer({
         antialias: true,
         canvas: canvasDomEl,
       });
       renderer.setSize(250, 250);
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(window.devicePixelRatio * 2);
 
       camera.position.set(25, 25, 25);
       camera.lookAt(scene.position);
@@ -52,9 +47,9 @@
       scene.add(cubes);
 
       const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshMatcapMaterial({ color: "#f5f5f5" });
+      const material = new THREE.MeshBasicMaterial({ color: "#000000" });
       const outlineMaterial = new THREE.LineBasicMaterial({
-        color: "#000000",
+        color: "#ffffff",
       });
       const edges = new THREE.EdgesGeometry(geometry);
 
@@ -69,12 +64,7 @@
 
       renderer.render(scene, camera);
 
-      for (const [i, position] of positions.entries()) {
-        const color =
-          i % 10 === 0 ? THREE.MathUtils.randInt(0, 0xffffff) : randomGrayRgb();
-        const material = new THREE.MeshBasicMaterial({
-          color,
-        });
+      for (const position of positions) {
         const cube = new THREE.Mesh(geometry, material);
         const outline = new THREE.LineSegments(edges, outlineMaterial);
 

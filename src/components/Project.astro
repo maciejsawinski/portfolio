@@ -4,9 +4,7 @@ import Button from "./Button.astro";
 const { name, description, url, github_url, img_src } = Astro.props;
 ---
 
-<div
-  class="flex flex-col md:flex-row justify-between mb-5 grayscale hover:grayscale-0"
->
+<div class="flex flex-col md:flex-row justify-between mb-5">
   <div class="flex flex-col justify-between">
     <div class="mb-2.5 md:mb-auto">
       <h3 class="font-bold">{name}</h3>
@@ -31,7 +29,9 @@ const { name, description, url, github_url, img_src } = Astro.props;
       }
     </div>
   </div>
-  <div class="flex justify-center mt-2.5 md:mt-auto min-w-[13rem]">
+  <div
+    class="flex justify-center mt-2.5 md:mt-auto min-w-[13rem] drop-shadow-xl hover:drop-shadow"
+  >
     <img class="w-52 rounded-lg" src={`projects/${img_src}`} alt="website" />
   </div>
 </div>
