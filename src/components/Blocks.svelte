@@ -1,6 +1,18 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import * as THREE from "three";
+  import {
+    Scene,
+    Color,
+    PerspectiveCamera,
+    WebGLRenderer,
+    Group,
+    BoxGeometry,
+    MeshBasicMaterial,
+    LineBasicMaterial,
+    EdgesGeometry,
+    Mesh,
+    LineSegments,
+  } from "three";
 
   import { sleep } from "../libs/utils";
 
@@ -25,15 +37,15 @@
   };
 
   onMount(async () => {
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#ffffff");
-    const camera = new THREE.PerspectiveCamera(35);
+    const scene = new Scene();
+    scene.background = new Color("#ffffff");
+    const camera = new PerspectiveCamera(35);
     const canvasDomEl: Element | null = document.querySelector("#top_blocks");
 
     if (canvasDomEl) {
-      const positions = await generatePositions(500);
+      const positions = await generatePositions(400);
 
-      const renderer = new THREE.WebGLRenderer({
+      const renderer = new WebGLRenderer({
         antialias: true,
         canvas: canvasDomEl,
       });
@@ -43,18 +55,18 @@
       camera.position.set(25, 25, 25);
       camera.lookAt(scene.position);
 
-      const cubes = new THREE.Group();
+      const cubes = new Group();
       scene.add(cubes);
 
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshBasicMaterial({ color: "#000000" });
-      const outlineMaterial = new THREE.LineBasicMaterial({
+      const geometry = new BoxGeometry(1, 1, 1);
+      const material = new MeshBasicMaterial({ color: "#000000" });
+      const outlineMaterial = new LineBasicMaterial({
         color: "#ffffff",
       });
-      const edges = new THREE.EdgesGeometry(geometry);
+      const edges = new EdgesGeometry(geometry);
 
-      const firstCube = new THREE.Mesh(geometry, material);
-      const firstOutline = new THREE.LineSegments(edges, outlineMaterial);
+      const firstCube = new Mesh(geometry, material);
+      const firstOutline = new LineSegments(edges, outlineMaterial);
 
       firstCube.position.set(0, 0, 0);
       firstOutline.position.set(0, 0, 0);
@@ -65,8 +77,8 @@
       renderer.render(scene, camera);
 
       for (const position of positions) {
-        const cube = new THREE.Mesh(geometry, material);
-        const outline = new THREE.LineSegments(edges, outlineMaterial);
+        const cube = new Mesh(geometry, material);
+        const outline = new LineSegments(edges, outlineMaterial);
 
         cube.position.set(...(position as [number, number, number]));
         outline.position.set(...(position as [number, number, number]));
