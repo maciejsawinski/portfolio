@@ -3,13 +3,16 @@ import Layout from "../layouts/Layout.astro";
 import BlocksContainer from "../components/BlocksContainer.astro";
 import Project from "../components/Project.astro";
 import Button from "../components/Button.astro";
+import Divider from "../components/Divider.astro";
 ---
 
 <Layout>
   <main class="max-w-2xl flex flex-col mx-auto px-5">
     <BlocksContainer />
-    <h2 class="mb-2.5 font-bold text-lg">Hello, I'm Maciej Sawiński</h2>
-    <p class="mb-10">
+    <h2 class="mb-2.5 font-bold text-xl text-center">
+      Hello, I'm Maciej Sawiński
+    </h2>
+    <p class="mb-10 text-center">
       I'm a software developer specializing in full-stack web development, with
       an interest in AI and blockchain, as well as topics like urbanism,
       transportation and gaming.
@@ -17,12 +20,13 @@ import Button from "../components/Button.astro";
     <h2 class="mb-2.5 font-bold text-lg">Recent projects</h2>
     <div class="mb-10">
       <Project
-        name="owlchain analytics"
+        name="owlchain-analytics"
         description="Svelte frontend app with redis caching and google cloud backend infrastructure for data fetching"
         url={["https://www.owlchain.xyz/"]}
         github_url={["https://github.com/maciejsawinski/owlchain-front"]}
         img_src="owlchain.webp"
       />
+      <Divider />
       <Project
         name="kv-json-cache"
         description="Npm package written in typescript"
@@ -30,6 +34,7 @@ import Button from "../components/Button.astro";
         github_url={["https://github.com/maciejsawinski/kv-json-cache"]}
         img_src="npm.webp"
       />
+      <Divider />
       <Project
         name="bybarbro"
         description="Vue.js/nuxt app with a self-hosted strapi cms service"
@@ -37,6 +42,7 @@ import Button from "../components/Button.astro";
         github_url={[]}
         img_src="bybarbro.webp"
       />
+      <Divider />
       <Project
         name="tik"
         description="React/next.js frontend app deployed on a raspberrypi with a backend service"
